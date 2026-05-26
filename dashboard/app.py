@@ -23,7 +23,7 @@ from plotly.subplots import make_subplots
 # ── Paths ──────────────────────────────────────────────────────────────────────
 ROOT     = Path(__file__).parent.parent
 IMG_ROOT = ROOT / "test_images"
-API_URL  = os.environ.get("API_URL", "http://localhost:8000")
+API_URL  = os.environ.get("API_URL", "https://yasmine0421-chestmnist-api.hf.space")
 LOG_FILE = ROOT / "logs" / "inference_log.jsonl"
 LOG_FILE.parent.mkdir(exist_ok=True)
 
