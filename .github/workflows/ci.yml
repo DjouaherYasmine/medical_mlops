@@ -11,6 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          lfs: true
 
       - name: Set up Python 3.11
         uses: actions/setup-python@v5
@@ -59,7 +61,8 @@ jobs:
                       'Dockerfile','README.md']
           for f in required:
               exists = Path(f).exists()
-              print(f'{'OK' if exists else 'MISSING'} {f}')
+              status = 'OK' if exists else 'MISSING'
+              print(f'{status} {f}')
               assert exists, f'{f} missing'
           print('All required files present')
           "
