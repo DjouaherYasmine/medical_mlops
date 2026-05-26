@@ -20,7 +20,5 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # expose FastAPI port
-EXPOSE 8000
-
-# run API
-CMD ["uvicorn", "src.api:app", "--host", "0.0.0.0", "--port", "8000"]
+EXPOSE 7860
+CMD ["uvicorn", "src.api:app", "--host", "0.0.0.0", "--port", "7860"]
