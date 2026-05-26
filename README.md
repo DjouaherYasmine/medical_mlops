@@ -23,6 +23,7 @@ Both fine-tuned models exceed SOTA. MobileNetV2 is deployed (higher AUC, 1.5× f
 
 ## Project Structure
 
+```
 medical_mlops/
 ├── data/ ← ChestMNIST auto-downloaded here (gitignored)
 ├── notebooks/
@@ -57,6 +58,7 @@ medical_mlops/
 ├── requirements.txt
 ├── Dockerfile
 └── README.md
+```
 
 ---
 
@@ -159,4 +161,4 @@ docker run -p 8000:8000 chestmnist-api
 - Sculley et al., Hidden Technical Debt in ML Systems, NeurIPS 2015
 - Zaharia et al., MLflow, IEEE Data Engineering Bulletin 2018
 - Bifet & Gavalda, ADWIN, SDM 2007
-- Gama et al., DDM, 2004
+- Gama et al., DDM, 200
