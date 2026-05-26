@@ -1,3 +1,12 @@
+---
+title: ChestMNIST API
+emoji: 🫁
+colorFrom: blue
+colorTo: green
+sdk: docker
+pinned: false
+---
+
 # Topic 10 — MLOps Pipeline for Medical Model Deployment
 
 End-to-end MLOps pipeline for training, versioning, deploying, and **monitoring** a medical imaging model on **ChestMNIST** (14-class multi-label chest X-ray classification).
