@@ -87,25 +87,17 @@ except Exception:
     )
     print(f"\nCreated registered model '{MODEL_NAME}'.")
 
-# ── 5. Log .pth as artifact and create version directly ───────────────────────
+# ── 5. Build source URI directly from local path (skip log_artifact) ──────────
 pth_path = ROOT / "models" / "mobilenet_v2_finetuned_best.pth"
 if not pth_path.exists():
     print(f"[ERROR] {pth_path} not found. Run restore_checkpoints.py first.")
     sys.exit(1)
 
-# Log the .pth into the run's artifact store
-print(f"\nLogging checkpoint to run {run_id}...")
-with mlflow.start_run(run_id=run_id):
-    mlflow.log_artifact(str(pth_path), artifact_path="checkpoint")
-print("  Checkpoint logged.")
-
-# Get the artifact URI for this run
-run_info    = client.get_run(run_id)
-artifact_uri = run_info.info.artifact_uri   # e.g. mlflow-artifacts:/... or file:///...
-source_uri   = f"{artifact_uri}/checkpoint/{pth_path.name}"
+# Use file:// URI with forward slashes (Windows-safe)
+source_uri = "file:///" + str(pth_path).replace("\\", "/")
 print(f"  Source URI: {source_uri}")
 
-# ── 6. Create model version directly (bypasses register_model format check) ───
+# ── 6. Create model version ────────────────────────────────────────────────────
 print("\nCreating model version...")
 mv = client.create_model_version(
     name=MODEL_NAME,
