@@ -240,11 +240,14 @@ test_images/
 logs/
 
 # MLflow local run files (keep experiments/mlflow.db but not mlruns/)
-mlruns/
-
+mlrunss/ 
+modelss/
 # Streamlit
 .streamlit/
 
 # Environment
 .env
 venv/
+
+experiments/mlflow2.db
+experiments/mlfloww.db

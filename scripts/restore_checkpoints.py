@@ -1,45 +1,41 @@
 """
-Restores model checkpoints from MLflow artifact store.
-Run this after cloning the repo instead of committing .pth files to Git.
+Restores model checkpoints by copying directly from mlruns artifact folders.
 Usage: python scripts/restore_checkpoints.py
 """
-import mlflow, os, sys
+import os, shutil, sqlite3
+from pathlib import Path
 
-ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-sys.path.insert(0, ROOT)
+ROOT = Path(__file__).parent.parent
+DB   = ROOT / 'experiments' / 'mlflow.db'
 
-mlflow.set_tracking_uri(f"sqlite:///{ROOT}/experiments/mlflow.db")
-client = mlflow.tracking.MlflowClient()
+os.makedirs(ROOT / 'models', exist_ok=True)
 
-TARGETS = {
-    "mobilenet_v2_finetuned": "mobilenet_v2_finetuned_best.pth",
-    "resnet18_finetuned":     "resnet18_finetuned_best.pth",
-}
+conn = sqlite3.connect(DB)
+cur  = conn.cursor()
+cur.execute("SELECT name, artifact_uri FROM runs WHERE status='FINISHED'")
+rows = cur.fetchall()
+conn.close()
 
-os.makedirs(os.path.join(ROOT, "models"), exist_ok=True)
+for run_name, artifact_uri in rows:
+    # Normalize: strip file://, convert forward slashes on Windows
+    artifact_uri = artifact_uri.replace('file://', '')
+    artifact_dir = Path(artifact_uri.replace('/', os.sep))
+    
+    # Make path relative if it's under ROOT
+    if not artifact_dir.is_absolute():
+        artifact_dir = ROOT / artifact_dir
 
-runs = client.search_runs(
-    experiment_ids=["2"],
-    order_by=["metrics.test_macro_auc DESC"]
-)
+    if not artifact_dir.exists():
+        print(f'[SKIP] {run_name} — artifact dir not found: {artifact_dir}')
+        continue
 
-restored = []
-for run in runs:
-    artifacts = client.list_artifacts(run.info.run_id)
-    for artifact in artifacts:
-        if artifact.path.endswith(".pth"):
-            dest = os.path.join(ROOT, "models", artifact.path)
-            if os.path.exists(dest):
-                print(f"[SKIP] {artifact.path} already exists")
-                continue
-            mlflow.artifacts.download_artifacts(
-                run_id=run.info.run_id,
-                artifact_path=artifact.path,
-                dst_path=os.path.join(ROOT, "models")
-            )
-            print(f"[OK] Restored {artifact.path} from run {run.info.run_name}")
-            restored.append(artifact.path)
+    for f in artifact_dir.iterdir():
+        if f.suffix == '.pth':
+            dest = ROOT / 'models' / f.name
+            if dest.exists():
+                print(f'[SKIP] {f.name} already exists')
+            else:
+                shutil.copy2(f, dest)
+                print(f'[OK]   {f.name}  ←  {run_name}')
 
-if not restored:
-    print("Nothing to restore — all checkpoints already present.")
-print("Done ✓")
+print('Done ✓')
