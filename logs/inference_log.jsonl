@@ -334,3 +334,7 @@
 {"ts": "2026-05-29T15:53:31.066979", "hospital": "D", "image": "075_00859_Emphysema_Infiltration_Mass.png", "max_conf": 0.5487, "positives": [], "latency_ms": 27.6, "pht_val": 0.1412, "pht_status": "STABLE", "adwin_status": "STABLE"}
 {"ts": "2026-05-29T15:53:32.172005", "hospital": "B", "image": "102_00102_Pneumothorax.png", "max_conf": 0.6519, "positives": ["Effusion", "Infiltration"], "latency_ms": 26.81, "pht_val": 0.6514, "pht_status": "STABLE", "adwin_status": "STABLE"}
 {"ts": "2026-05-29T15:53:33.383440", "hospital": "C", "image": "113_00113_Nodule.png", "max_conf": 0.4233, "positives": [], "latency_ms": 26.38, "pht_val": 0.0, "pht_status": "STABLE", "adwin_status": "STABLE"}
+{"ts": "2026-05-29T16:00:27.116699", "hospital": "C", "image": "008_00008_Fibrosis.png", "max_conf": 0.5929, "positives": [], "latency_ms": 28.06, "pht_val": 0.002, "pht_status": "STABLE", "adwin_status": "STABLE"}
+{"ts": "2026-05-29T16:00:29.991453", "hospital": "C", "image": "009_00009_NoFinding.png", "max_conf": 0.505, "positives": [], "latency_ms": 27.3, "pht_val": 0.0, "pht_status": "STABLE", "adwin_status": "STABLE"}
+{"ts": "2026-05-29T16:00:42.209010", "hospital": "C", "image": "010_00010_NoFinding.png", "max_conf": 0.516, "positives": [], "latency_ms": 24.17, "pht_val": 0.0, "pht_status": "STABLE", "adwin_status": "STABLE"}
+{"ts": "2026-05-29T16:00:54.523604", "hospital": "C", "image": "011_00011_NoFinding.png", "max_conf": 0.5318, "positives": [], "latency_ms": 21.04, "pht_val": 0.0, "pht_status": "STABLE", "adwin_status": "STABLE"}
